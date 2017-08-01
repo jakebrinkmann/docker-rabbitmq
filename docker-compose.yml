@@ -1,0 +1,40 @@
+version: '2'
+
+
+services:
+  rabbit-broker:
+    image: rabbitmq:3
+    ports:
+      - "5672"
+    environment:
+      RABBITMQ_NODE_PORT: "5672"
+
+  postgres-maestro:
+    image: postgres:9.6
+    ports:
+      - "5432"
+    volumes:
+      - maestro-data:/var/lib/postgresql/data
+      - ./maestro/initdb:/docker-entrypoint-initdb.d
+
+  rabbit-maestro:
+    build: .
+    entrypoint:
+      - /usr/src/app/maestro/start.sh
+    depends_on:
+      - rabbit-broker
+      - postgres-maestro
+    environment:
+      MAESTRO_MAX_QUEUE: "50"
+      MAESTRO_RMQHOST: "rabbit-broker"
+      MAESTRO_RMQPORT: "5672"
+      MAESTRO_PGHOST: "postgres-maestro"
+      MAESTRO_PGDB: "maestro"
+      MAESTRO_PGTAB: "work_units"
+      
+  hadoop-leader:
+    build: hadoop/leader/
+  
+
+volumes:
+  maestro-data:
