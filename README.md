@@ -1,6 +1,3 @@
-# Red-Tailed-Boa-Broadcast
-
-**PROVISIONAL SOFTWARE DISCLAIMER**: This software is preliminary and is subject to revision.
 
 Create a workflow for tracking order status using rabbitmq
 
