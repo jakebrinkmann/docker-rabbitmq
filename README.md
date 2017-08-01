@@ -1,5 +1,5 @@
 
-Create a workflow for tracking order status using rabbitmq
+Create a workflow for tracking order status using **[RabbitMQ](https://www.rabbitmq.com/)**
 
 ```
                     +--------+
